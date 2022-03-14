@@ -138,11 +138,10 @@ class Settings():
                     return Settings.DefaultSettings()
                 else:
                     return seting
-        else:
-            seting = Settings.DefaultSettings()
-            if not os.path.exists(APP_DIRECTORY):
-                os.mkdir(APP_DIRECTORY)
-            return seting
+        seting = Settings.DefaultSettings()
+        if not os.path.exists(APP_DIRECTORY):
+            os.mkdir(APP_DIRECTORY)
+        return seting
             
 APP_DIRECTORY=f"{Path.home()}\\Documents\\YPPAHSOFT\\"
 SETTINGS_FILE = f"{Path.home()}\\Documents\\YPPAHSOFT\\settings.pkl"
@@ -167,7 +166,7 @@ class Functions():
                 count+=1
                 sleep(0.1)
         return res
-
+# Es pot optimitzar ajuntan les funcions
     def fndcn(driver,path):
         speed = True
         count = 0
@@ -259,7 +258,7 @@ class Menus():
             if result == 'yes':
                 if SETTINGS["STEAM_DIR"] == None:
                     if not process_exists("Steam.exe"):
-                        filename = 'C:\Program Files\Steam\steam.exe'
+                        filename = 'C:\Program Files\Steam\steam.exe' # No sempre sera aixis s'hauria d'agafar l'exe desde el PATH
                         while not os.path.exists(filename):
                             messagebox.showinfo('', 'Select your steam exe')
                             filename = filedialog.askopenfilename(initialdir = "/", title = "Select a File", filetypes = (("Executable", "*.exe*"), ("all files", "*.*")))
@@ -294,7 +293,7 @@ class Menus():
             except:
                 pass
 
-        def auto():
+        def auto(): #WTF is dis
             pass
 
         cardsb = Button(win, text="Sell Cards", relief="flat", fg=SETTINGS["TXT_COLOR"], cursor="hand2", bg=SETTINGS["BG_COLOR"], font=("Times", "14", "bold"), command=cards)
@@ -350,9 +349,9 @@ class Menus():
                 driver = webdriver.Firefox()
                 driver.get("https://store.steampowered.com/login/")
                 user = WebDriverWait(driver, 60).until(ec.visibility_of_element_located((By.XPATH,"//input[@id='input_username']]")))
-                user.send_keys(usri.get())
+                user.send_keys(u)
                 password = WebDriverWait(driver, 60).until(ec.visibility_of_element_located((By.XPATH,"//input[@id='input_password']")))
-                password.send_keys(pswi.get())
+                password.send_keys(p)
                 loginbtn = WebDriverWait(driver, 60).until(ec.visibility_of_element_located((By.CLASS_NAME,'login_btn')))
                 loginbtn.click()
                 _2fa = f2ai.get()
@@ -482,11 +481,10 @@ class Menus():
         def gneratepass():
             import pyperclip
             import random
-            chars = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~"
             pas = ""
             randchars = ""
-            for x in range(1000):
-                randchars += random.choice(chars)
+            for x in range(1000): # No ho entenc
+                randchars += random.choice("!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_abcdefghijklmnopqrstuvwxyz{|}~")
             for x in range(int(lengthval.get())):
                 pas += random.choice(randchars)
             pyperclip.copy(pas)
@@ -498,8 +496,7 @@ class Menus():
         def filecount():
             import shutil
             files = 0
-            dirs = ["C:\\Windows\\Temp",f"{Path.home()}\\AppData\\Local\\Temp","C:\\Windows\\Prefetch"]
-            for dir in dirs:
+            for dir in ["C:\\Windows\\Temp",f"{Path.home()}\\AppData\\Local\\Temp","C:\\Windows\\Prefetch"]:
                 folder = dir
                 for filename in os.listdir(folder):
                     file_path = os.path.join(folder, filename)
